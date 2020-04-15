@@ -24,8 +24,8 @@
 import UIKit
 
 open class TCDelegate: NSObject, UITableViewDelegate, UICollectionViewDelegate {
-    open let tableView: UITableView!
-    open let collectionView: UICollectionView!
+    public let tableView: UITableView!
+    public let collectionView: UICollectionView!
     internal var scrollingToTop = false
     internal var targetRect: CGRect?
     

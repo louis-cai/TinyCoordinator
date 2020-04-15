@@ -27,16 +27,16 @@ public extension TCDataSource {
     // MARK: - Cell
 
     @objc(numberOfSectionsInCollectionView:)
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return globalDataMetric.numberOfSections
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return globalDataMetric.numberOfItems(in: section)
     }
     
     @objc(collectionView:cellForItemAtIndexPath:)
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let subclass = self as? TCDataSourceable else {
             fatalError("Must conforms protocol `TCDataSourceable`.")
         }
@@ -75,7 +75,7 @@ public extension TCDataSource {
     // MARK: - Move
     
     @objc(collectionView:canMoveItemAtIndexPath:)
-    public func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         if let subclass = self as? TCTableViewCollectionViewMovable {
             return subclass.canMove(at: indexPath)
         } else {
@@ -84,7 +84,7 @@ public extension TCDataSource {
     }
     
     @objc(collectionView:moveItemAtIndexPath:toIndexPath:)
-    public func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let subclass = self as? TCTableViewCollectionViewMovable else { return }
         
         globalDataMetric.move(from: sourceIndexPath, to: destinationIndexPath)
@@ -159,7 +159,7 @@ public extension TCDataSource {
     
     /// TCDataSource Subclas UICollectionViewDataSource require supplementary view, simple return this method.
     /// **Note**: register first.
-    public func viewForSupplementaryView(of kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func viewForSupplementaryView(of kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let subclass = self as? TCCollectionSupplementaryViewibility else {
             fatalError("Must conforms protocol `TCCollectionSupplementaryViewibility`.")
         }

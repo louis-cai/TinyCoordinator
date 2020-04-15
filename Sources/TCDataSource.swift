@@ -33,8 +33,8 @@ import UIKit
 /// So we can not extension `TCDataSourceable` implement `UITableViewDataSource`.
 /// The only thing we can do is provide helper func for `UITableViewDataSource` implement instance.
 open class TCDataSource: NSObject, UITableViewDataSource, UICollectionViewDataSource {
-    open let tableView: UITableView!
-    open let collectionView: UICollectionView!
+    public let tableView: UITableView!
+    public let collectionView: UICollectionView!
     open var globalDataMetric: TCGlobalDataMetric
     
     #if DEBUG

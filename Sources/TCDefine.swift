@@ -32,19 +32,19 @@ internal extension TCCollectionElementKind {
     internal var value: String {
         switch self {
         case .sectionHeader:
-            return UICollectionElementKindSectionHeader
+            return UICollectionView.elementKindSectionHeader
         case .sectionFooter:
-            return UICollectionElementKindSectionFooter
+            return UICollectionView.elementKindSectionFooter
         }
     }
 }
 
 internal extension String {
     internal var value: TCCollectionElementKind {
-        if self == UICollectionElementKindSectionHeader {
+        if self == UICollectionView.elementKindSectionHeader {
             return .sectionHeader
         }
-        else if self == UICollectionElementKindSectionFooter {
+        else if self == UICollectionView.elementKindSectionFooter {
             return .sectionFooter
         }
         else {
@@ -77,8 +77,8 @@ public protocol Reusable: class {
 }
 
 public extension Reusable where Self: TCReusableViewType {
-    public static var reuseIdentifier: String { return String(describing: self) }
-    public static var nib: UINib? { return nil }
+    static var reuseIdentifier: String { return String(describing: self) }
+    static var nib: UINib? { return nil }
 }
 
 // MARK: -
@@ -179,6 +179,6 @@ internal final class TCPlaceholder: NSObject {
 
 internal extension String {
     internal var length: Int {
-        return characters.count
+        return count
     }
 }

@@ -46,10 +46,10 @@ public extension Array {
         }
 
         let firstItemData = self[source]
-        let firstRange = Range(source ..< source + 1)
+        let firstRange = source ..< source + 1
         
         let secondaryItemData = self[destination]
-        let secondaryRange = Range(destination ..< destination + 1)
+        let secondaryRange = destination ..< destination + 1
         
         replaceSubrange(firstRange, with: [secondaryItemData])
         replaceSubrange(secondaryRange, with: [firstItemData])
@@ -59,7 +59,7 @@ public extension Array {
         if count <= index {
             fatalError("Index beyond boundary.")
         }
-        let range = Range(index ..< index + 1)
+        let range = index ..< index + 1
         replaceSubrange(range, with: [element])
     }
     

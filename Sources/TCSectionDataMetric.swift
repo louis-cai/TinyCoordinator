@@ -149,7 +149,7 @@ public extension TCSectionDataMetric {
     }
     
     internal func index(of object: TCDataType) -> Int? {
-        return itemsData.index(where: object.isEqual)
+        return itemsData.firstIndex(where: object.isEqual)
     }
     
     internal func containsSupplementaryHeaderData(_ object: TCDataType) -> Bool {
@@ -165,7 +165,7 @@ public extension TCSectionDataMetric {
             return nil
         }
         
-        return elements.index(where: object.isEqual)
+        return elements.firstIndex(where: object.isEqual)
     }
 
     internal func containsSupplementaryFooterData(_ object: TCDataType) -> Bool {
@@ -181,7 +181,7 @@ public extension TCSectionDataMetric {
             return nil
         }
         
-        return elements.index(where: object.isEqual)
+        return elements.firstIndex(where: object.isEqual)
     }
 }
 
@@ -189,14 +189,14 @@ public extension TCSectionDataMetric {
 
 public extension TCSectionDataMetric {
     /// Append single data for current section data metric.
-    public mutating func append(_ newElement: TCDataType) {
+    mutating func append(_ newElement: TCDataType) {
         itemsData.append(newElement)
         cachedHeightForCell.append(nil)
         cachedSizeForCell.append(nil)
     }
     
     /// Append new data for current section data metric.
-    public mutating func append(contentsOf newElements: [TCDataType]) {
+    mutating func append(contentsOf newElements: [TCDataType]) {
         itemsData.append(contentsOf: newElements)
         let height = [CGFloat?](repeating: nil, count: newElements.count)
         cachedHeightForCell.append(contentsOf: height)
@@ -205,13 +205,13 @@ public extension TCSectionDataMetric {
     }
     
     /// Append single data for current setion data metric at specific index.
-    public mutating func insert(_ newElement: TCDataType, at index: Int) {
+    mutating func insert(_ newElement: TCDataType, at index: Int) {
         validateInsertElementArgument(at: index, method: #function, file: #file, line: #line)
         insert(contentsOf: [newElement], at: index)
     }
     
     /// Append new data for current setion data metric at specific index.
-    public mutating func insert(contentsOf newElements: [TCDataType], at index: Int) {
+    mutating func insert(contentsOf newElements: [TCDataType], at index: Int) {
         validateInsertElementArgument(at: index, method: #function, file: #file, line: #line)
         itemsData.insert(contentsOf: newElements, at: index)
         let height = [CGFloat?](repeating: nil, count: newElements.count)
@@ -221,7 +221,7 @@ public extension TCSectionDataMetric {
     }
     
     /// Replace single new data for current setion data metric at specific index.
-    public mutating func replace(with newElement: TCDataType, at index: Int) {
+    mutating func replace(with newElement: TCDataType, at index: Int) {
         validateNoneInsertElementArgument(at: index, method: #function, file: #file, line: #line)
         itemsData.replace(at: index, with: newElement)
         cachedHeightForCell.replace(at: index, with: nil)
@@ -229,10 +229,10 @@ public extension TCSectionDataMetric {
     }
     
     /// Replace multiple new data for current setion data metric at specific index.
-    public mutating func replace(with newElements: [TCDataType], at index: Int) {
+    mutating func replace(with newElements: [TCDataType], at index: Int) {
         validateNoneInsertElementArgument(at: index, method: #function, file: #file
             , line: #line)
-        let range = Range(index ..< index + 1)
+        let range = index ..< index + 1
         itemsData.replace(range: range, with: newElements)
         let height = [CGFloat?](repeating: nil, count: newElements.count)
         cachedHeightForCell.replace(range: range, with: height)
@@ -242,7 +242,7 @@ public extension TCSectionDataMetric {
     
     /// Remove first data.
     @discardableResult
-    public mutating func removeFirst() -> TCDataType {
+    mutating func removeFirst() -> TCDataType {
         cachedHeightForCell.removeFirst()
         cachedSizeForCell.removeFirst()
         
@@ -251,7 +251,7 @@ public extension TCSectionDataMetric {
     
     /// Remove last data.
     @discardableResult
-    public mutating func removeLast() -> TCDataType {
+    mutating func removeLast() -> TCDataType {
         cachedHeightForCell.removeLast()
         cachedSizeForCell.removeLast()
         
@@ -260,7 +260,7 @@ public extension TCSectionDataMetric {
     
     /// Remove specific data at index.
     @discardableResult
-    public mutating func remove(at index: Int) -> TCDataType? {
+    mutating func remove(at index: Int) -> TCDataType? {
         if numberOfItems <= index {
             return nil
         }
@@ -271,21 +271,21 @@ public extension TCSectionDataMetric {
     }
     
     /// Remove all data.
-    public mutating func removeAll() {
+    mutating func removeAll() {
         itemsData.removeAll()
         cachedHeightForCell.removeAll()
         cachedSizeForCell.removeAll()
     }
     
     /// Exchange data.
-    public mutating func exchange(at index: Int, to otherIndex: Int) {
+    mutating func exchange(at index: Int, to otherIndex: Int) {
         itemsData.exchange(at: index, to: otherIndex)
         cachedHeightForCell.exchange(at: index, to: otherIndex)
         cachedSizeForCell.exchange(at: index, to: otherIndex)
     }
     
     /// Move data.
-    public mutating func move(from index: Int, to otherIndex: Int) {
+    mutating func move(from index: Int, to otherIndex: Int) {
         itemsData.move(from: index, to: otherIndex)
         cachedHeightForCell.move(from: index, to: otherIndex)
         cachedSizeForCell.move(from: index, to: otherIndex)

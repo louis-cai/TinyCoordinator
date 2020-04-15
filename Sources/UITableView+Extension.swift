@@ -26,7 +26,7 @@ import UIKit
 // MARK: - Compute Size
 
 public extension UITableView {
-    public func tc_heightForReusableCell<T: UITableViewCell>(
+    func tc_heightForReusableCell<T: UITableViewCell>(
         byIdentifier identifier: String,
         populateData: (T) -> ()) -> CGFloat
     {
@@ -37,11 +37,11 @@ public extension UITableView {
         reusableCell.prepareForReuse()
         populateData(reusableCell)
         
-        let fittingSize = CGSize(width: bounds.width, height: UILayoutFittingExpandedSize.height)
+        let fittingSize = CGSize(width: bounds.width, height: UIView.layoutFittingExpandedSize.height)
         return reusableCell.preferredLayoutSize(fitting: fittingSize).height + 1.0 / UIScreen.main.scale
     }
     
-    public func tc_heightForReusableHeaderFooterView<T: UITableViewHeaderFooterView>(
+    func tc_heightForReusableHeaderFooterView<T: UITableViewHeaderFooterView>(
         byIdentifier identifier: String,
         populateData: (T) -> ()) -> CGFloat
     {
@@ -52,7 +52,7 @@ public extension UITableView {
         reusableHeaderFooterView.prepareForReuse()
         populateData(reusableHeaderFooterView)
 
-        let fittingSize = CGSize(width: bounds.width, height: UILayoutFittingExpandedSize.height)
+        let fittingSize = CGSize(width: bounds.width, height: UIView.layoutFittingExpandedSize.height)
         return reusableHeaderFooterView.preferredLayoutSize(fitting: fittingSize).height + 1.0 / UIScreen.main.scale
     }
 }
@@ -60,7 +60,7 @@ public extension UITableView {
 // MARK: - Reusable
 
 public extension UITableView {
-    public func tc_registerReusableCell<T: UITableViewCell>(`class` type: T.Type) where T: Reusable {
+    func tc_registerReusableCell<T: UITableViewCell>(`class` type: T.Type) where T: Reusable {
         if let nib = T.nib {
             register(nib, forCellReuseIdentifier: T.reuseIdentifier)
         } else {
@@ -68,15 +68,15 @@ public extension UITableView {
         }
     }
     
-    public func tc_dequeueReusableCell<T: UITableViewCell>() -> T where T: Reusable {
+    func tc_dequeueReusableCell<T: UITableViewCell>() -> T where T: Reusable {
         return dequeueReusableCell(withIdentifier: T.reuseIdentifier) as! T
     }
     
-    public func tc_dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
+    func tc_dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
         return dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as! T
     }
     
-    public func tc_registerReusableHeaderFooterView<T: UITableViewHeaderFooterView>(class: T.Type) where T: Reusable {
+    func tc_registerReusableHeaderFooterView<T: UITableViewHeaderFooterView>(class: T.Type) where T: Reusable {
         if let nib = T.nib {
             register(nib, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
         } else {
@@ -84,7 +84,7 @@ public extension UITableView {
         }
     }
         
-    public func tc_dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T? where T: Reusable {
+    func tc_dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T? where T: Reusable {
         return dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as! T?
     }
 }

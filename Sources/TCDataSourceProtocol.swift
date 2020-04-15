@@ -71,7 +71,7 @@ public protocol TCTableViewEditable {
     /// Can edit the specific item.
     func canEdit(at indexPath: IndexPath) -> Bool
     /// Commit editing data behavior.
-    func commitEditing(for style: UITableViewCellEditingStyle, with data: TCDataType)
+    func commitEditing(for style: UITableViewCell.EditingStyle, with data: TCDataType)
 }
 
 // MARK: TCTableViewCollectionViewMovable

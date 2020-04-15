@@ -38,16 +38,16 @@ public extension TCDataSource {
     // MARK: - Cell
 
     @objc(numberOfSectionsInTableView:)
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return globalDataMetric.numberOfSections
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return globalDataMetric.numberOfItems(in: section)
     }
     
     @objc(tableView:cellForRowAtIndexPath:)
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let subclass = self as? TCDataSourceable else {
             fatalError("Must conforms protocol `TCDataSourceable`.")
         }
@@ -89,23 +89,23 @@ public extension TCDataSource {
     
     // MARK: - Section title
     
-    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return globalDataMetric.titleForHeader(in: section)
     }
     
-    public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return globalDataMetric.titleForFooter(in: section)
     }
     
     // MARK: - Index
     
     @objc(sectionIndexTitlesForTableView:)
-    public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return globalDataMetric.sectionIndexTitles
     }
     
     @objc(tableView:sectionForSectionIndexTitle:atIndex:)
-    public func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         guard let section = globalDataMetric.sectionIndexTitles?.index(of: title) else {
             fatalError("Section index title data error.")
         }
@@ -116,7 +116,7 @@ public extension TCDataSource {
     // MARK: - Editing
     
     @objc(tableView:canEditRowAtIndexPath:)
-    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if let subclass = self as? TCTableViewEditable {
             return subclass.canEdit(at: indexPath)
         } else {
@@ -125,7 +125,7 @@ public extension TCDataSource {
     }
     
     @objc(tableView:commitEditingStyle:forRowAtIndexPath:)
-    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard let subclass = self as? TCTableViewEditable else { return }
         guard let data = globalDataMetric.dataForItem(at: indexPath) else { return }
         
@@ -145,7 +145,7 @@ public extension TCDataSource {
     // MARK: - Move
     
     @objc(tableView:canMoveRowAtIndexPath:)
-    public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         if let subclass = self as? TCTableViewCollectionViewMovable {
             return subclass.canMove(at: indexPath)
         } else {
@@ -154,7 +154,7 @@ public extension TCDataSource {
     }
     
     @objc(tableView:moveRowAtIndexPath:toIndexPath:)
-    public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let subclass = self as? TCTableViewCollectionViewMovable else { return }
         
         globalDataMetric.move(from: sourceIndexPath, to: destinationIndexPath)
@@ -169,13 +169,13 @@ public extension TCDataSource {
     // MARK: - Cell height
     
     internal func heightForRow(at indexPath: IndexPath) -> CGFloat {
-        guard let subclass = self as? TCDataSourceable else { return UITableViewAutomaticDimension }
+        guard let subclass = self as? TCDataSourceable else { return UITableView.automaticDimension }
         
         if let cachedHeight = globalDataMetric.cachedItemHeight(at: indexPath) {
             return cachedHeight
         }
         
-        guard let data = globalDataMetric.dataForItem(at: indexPath) else { return UITableViewAutomaticDimension }
+        guard let data = globalDataMetric.dataForItem(at: indexPath) else { return UITableView.automaticDimension }
         let identifier = subclass.reusableCellIdentifier(for: indexPath)
         let height = tableView.tc_heightForReusableCell(byIdentifier: identifier) { (reusableCell) -> () in
             subclass.populateData(with: data, forReusableCell: reusableCell)
